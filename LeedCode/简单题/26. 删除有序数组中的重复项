@@ -1,0 +1,51 @@
+解题思路
+使用迭代器，如果与上一个数相同则使用erase删除该元素，每删除一次将nums.size()-1;
+
+代码
+
+class Solution {
+public:
+    int removeDuplicates(vector<int>& nums) {
+        vector<int>::iterator item = nums.begin();
+        int temp,Length=nums.size();
+        while (item != nums.end())
+        {
+            if (item == nums.begin())
+            {
+                temp = *item;
+                item++;
+            }
+            else if (temp == *item)
+            {
+                item=nums.erase(item);
+                Length--;
+            }
+            else
+            {
+                temp = *item;
+                item++;
+            }
+            if (item == nums.end())
+                break;
+        }
+        return Length;
+    }
+};
+
+简化版：
+解题思路：
+使用unique会把重复元素放在后面的特性使用erase进行区域删除。
+
+class Solution {
+public:
+    int removeDuplicates(vector<int>& nums) {
+        nums.erase(unique(nums.begin(), nums.end()), nums.end());
+        return nums.size(); 
+    }
+};
+
+
+作者：qing-huo-3
+链接：https://leetcode-cn.com/problems/remove-duplicates-from-sorted-array/solution/di-yi-ge-ccheng-xu-by-qing-huo-3-6e45/
+来源：力扣（LeetCode）
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
