@@ -1,0 +1,45 @@
+解题思路
+把两个字符数组的指针疯狂的变，不能直接转化字符数组有点痛苦。
+
+代码
+
+class Solution {
+public:
+    int strStr(string haystack, string needle) {
+    const char* haystack_char;
+	const char* needle_char;
+	haystack_char = haystack.c_str();
+	needle_char = needle.c_str();
+	if (needle == "")
+		return 0;
+	else if (needle.length() >= haystack.length() && haystack.compare(needle)!=0)
+		return -1;
+	for (int i = 0; i < haystack.length(); i++)
+	{
+		for (int j = 0; j < needle.length(); j++)
+		{
+			if (*haystack_char == *needle_char)
+				if (j == needle.length() - 1)
+					return i;
+				else
+				{
+					needle_char++;
+					haystack_char++;
+				}
+			else
+			{
+					needle_char -= j;
+					haystack_char -= j;
+					break;
+			}
+		}
+		haystack_char++;
+	}
+	return -1;
+    }
+};
+
+作者：qing-huo-3
+链接：https://leetcode-cn.com/problems/implement-strstr/solution/forxun-huan-bao-li-jie-by-qing-huo-3-jisq/
+来源：力扣（LeetCode）
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
