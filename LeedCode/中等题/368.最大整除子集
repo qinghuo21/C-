@@ -1,0 +1,54 @@
+解题思路
+主要思路是从自身往后计算最大的子集然后加入子集的集，把他存起来。
+dp[i]=max[dp[0...i-1]];
+最后通过计算max(dp[i]) 来获得最大的下标，输出它的集。
+
+代码
+
+class Solution {
+public:
+    vector<int> largestDivisibleSubset(vector<int>& nums) {
+    int len = nums.size();
+	vector<int> v;
+	vector<vector<int>> result;
+	vector<int> dp(len,1); //len个空间大小，初始化为1
+	int tempindex[2];//index len
+	int maxindex = 0;
+	if (nums.size() == 1)
+		return nums;
+	sort(nums.begin(), nums.end());
+	for (int i = 0; i < len; i++)
+	{
+		tempindex[0] = i;//初始化最大子集的下标为自己
+		tempindex[1] = 0;//初始化最大子集的长度为0
+		for (int j = i-1; j >=0 ; j--)//往后找最大子集
+		{
+			if (nums[i] % result[j][dp[j] - 1] == 0 && dp[j] > tempindex[1])//自身%子集的最后一位，找到最大的子集
+			{
+				tempindex[0] = j;
+				tempindex[1] = dp[j];
+			}
+		}
+
+		if (tempindex[0] != i) //如果找到子集将子集加入自身的集，并改变dp
+		{
+			v = result[tempindex[0]];
+			dp[i] += dp[tempindex[0]];
+		}
+		v.push_back(nums[i]);//加入自身
+		result.push_back(v);//加入总集
+		v.clear();//清理临时集
+	}
+	for (int i = 0; i < len; i++)//找到最大的集的下标
+	{
+		if (dp[maxindex] < dp[i])
+			maxindex = i;
+	}
+	return result[maxindex];
+    }
+};
+
+作者：qing-huo-3
+链接：https://leetcode-cn.com/problems/largest-divisible-subset/solution/dong-tai-gui-hua-dp-by-qing-huo-3-eybu/
+来源：力扣（LeetCode）
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
