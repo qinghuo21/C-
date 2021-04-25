@@ -1,3 +1,4 @@
+set
 解题思路
 利用set的不重复性，如果插入重复数据size不会改变从而判断出现了重复。
 
@@ -21,3 +22,26 @@ public:
 链接：https://leetcode-cn.com/problems/shu-zu-zhong-zhong-fu-de-shu-zi-lcof/solution/set-by-qing-huo-3-3oqy/
 来源：力扣（LeetCode）
 著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+简单排序
+class Solution {
+public:
+    int findRepeatNumber(vector<int>& nums) {
+        int temp=-1;
+        sort(nums.begin(),nums.end());
+        for(int item:nums)
+        {
+            if(temp==item)
+                return item;
+            else
+                temp=item;
+        }
+        return nums[0];
+    }
+};
+
+作者：qing-huo-3
+链接：https://leetcode-cn.com/problems/shu-zu-zhong-zhong-fu-de-shu-zi-lcof/solution/pai-xu-hou-dui-bi-by-qing-huo-3-u86x/
+来源：力扣（LeetCode）
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
