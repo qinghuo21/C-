@@ -1,0 +1,26 @@
+解题思路
+执行用时：4 ms
+内存消耗：5.8 MB
+利用int型的sqrt只保留整数部分的特性进行计算。
+
+代码
+
+class Solution {
+public:
+    bool judgeSquareSum(int c) {
+    int temp,n;
+    n=sqrt(c);
+	for (int i = 0; i <= n; i++)
+	{
+		temp=sqrt(c-(i*i));
+        if(c==(temp*temp)+(i*i))
+            return true;
+	}
+	return false;
+    }
+};
+
+作者：qing-huo-3
+链接：https://leetcode-cn.com/problems/sum-of-square-numbers/solution/jian-dan-jie-fa-by-qing-huo-3-glr4/
+来源：力扣（LeetCode）
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
