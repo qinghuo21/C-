@@ -1,0 +1,53 @@
+解题思路
+先默认将low和high加上。
+把节点分为三类，
+1.符合low<item<high sum+=item 然后遍历它的左右节点
+2.符合low>=item 遍历它的右节点
+3.符合high<=item 遍历它的左节点
+
+代码
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+int sum = 0;
+int rangeSumBST(TreeNode* root, int low, int high) {
+	sum = low + high;
+	ScanTreeNode(root,low,high);
+	return sum;
+}
+void ScanTreeNode(TreeNode* root,int low,int high)
+{
+	if (root == nullptr)
+		return;
+	if (root->val<high && root->val>low)
+	{
+		sum += root->val;
+		ScanTreeNode(root->left,low,high);
+		ScanTreeNode(root->right, low, high);
+	}
+	else if (root->val >= high)
+	{
+		ScanTreeNode(root->left, low, high);
+	}
+	else if (root->val <= low)
+	{
+		ScanTreeNode(root->right, low, high);
+	}
+}
+};
+
+作者：qing-huo-3
+链接：https://leetcode-cn.com/problems/range-sum-of-bst/solution/di-gui-by-qing-huo-3-vwrt/
+来源：力扣（LeetCode）
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
