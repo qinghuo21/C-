@@ -1,0 +1,48 @@
+解题思路
+先找到word[0]的位置开始递归。
+递归结束条件
+false 1是越界 2是字符串不对
+true 是字符串全部满足
+result的存在是为了寻找到那个满足条件的路线并正确的返回true
+
+代码
+
+class Solution {
+public:
+	bool exist(vector<vector<char>>& board, string word) {
+		height = board.size();
+		length = board[0].size();
+		for (int i = 0; i < height; i++)
+		{
+			for (int j = 0; j < length; j++)
+			{
+				if(board[i][j]==word[0])//寻找起始字符
+                {
+                    if (Find(board, word, i, j, 0))//开始递归
+					    return true;
+                }
+			}
+		}
+		return false;
+	}
+private:
+	int height, length;
+	bool Find(vector<vector<char>>& board, string word, int i, int j, int k)
+	{
+		if (i < 0 || i >= height || j < 0 || j >= length || board[i][j] != word[k])//不满足的条件
+			return false;
+		if (k == word.size() - 1)//成功的条件
+			return true;
+		board[i][j] = '#';//修改原串使得字符串不能返回
+		//开始遍历递归
+		bool result = Find(board, word, i + 1, j, k + 1) || Find(board, word, i, j + 1, k + 1) ||
+			Find(board, word, i - 1, j, k + 1) || Find(board, word, i, j - 1, k + 1);
+		board[i][j] = word[k];//遍历完成后将原串改回
+		return result;//返回最后结果
+	}
+};
+
+作者：qing-huo-3
+链接：https://leetcode-cn.com/problems/ju-zhen-zhong-de-lu-jing-lcof/solution/di-gui-by-qing-huo-3-eyg1/
+来源：力扣（LeetCode）
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
