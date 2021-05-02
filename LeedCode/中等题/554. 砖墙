@@ -1,0 +1,46 @@
+解题思路
+通过高速的红黑树查找修改去寻找第二大的最多出现的数字次数，使用wall.size()-item；
+因为第一大永远是wall的宽度。
+
+代码
+
+class Solution {
+public:
+    int leastBricks(vector<vector<int>>& wall) {
+		unordered_map<int,int> wallmap;
+		int temp = 0;
+		int result[2] = { 0,0 };//第二大和第一大
+		for (auto item1 : wall)
+		{
+			temp = 0;
+			for (auto item2 : item1)
+			{
+				temp += item2;//红黑树的key
+				if (wallmap[temp] == NULL)//如果暂不存在就进行初始化1
+					wallmap[temp] = 1;
+				else
+					wallmap[temp]++;//如果存在直接++
+			}
+		}
+		auto item = wallmap.begin();//迭代器
+		for (; item != wallmap.end(); item++)
+		{
+			if (item->second > result[0])//如果比第二大大
+			{
+				if(item->second>result[1])//如果比第一大还大
+                {
+                    result[0] = result[1];
+				    result[1] = item->second;
+                }
+                else
+                    result[0]=item->second;
+			}
+		}
+		return wall.size() - result[0];//墙的长度减去第二大数字出现的次数
+	}
+};
+
+作者：qing-huo-3
+链接：https://leetcode-cn.com/problems/brick-wall/solution/unordered_map-by-qing-huo-3-9qtt/
+来源：力扣（LeetCode）
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
